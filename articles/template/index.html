@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- ① Change this to match your article title -->
+  <title>Your Article Title — The Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+<body>
+
+<!-- ============================================================
+     SITE HEADER  (same on every page)
+     ============================================================ -->
+<header class="site-header">
+  <a href="../../index.html" class="site-name">The Blog</a>
+  <nav class="site-nav">
+    <a href="../../index.html">&larr; All articles</a>
+  </nav>
+</header>
+
+
+<!-- ============================================================
+     ARTICLE HEADER
+     Edit: tag, h1, subtitle, byline
+     ============================================================ -->
+<header class="article-header">
+  <div class="tag">Data · Scrollytelling</div>
+  <h1>Your Article Title Goes Here</h1>
+  <p class="subtitle">
+    A compelling subtitle that draws readers in and tells them why
+    this story is worth their time.
+  </p>
+  <p class="byline">By <strong>Your Name</strong> &middot; March 2026</p>
+</header>
+
+
+<!-- ============================================================
+     INTRO  — prose before the scrollytelling starts
+     ============================================================ -->
+<section class="prose">
+  <p>
+    This is your article's introduction. Write two or three paragraphs
+    here to set up the story before the scrollytelling begins. Introduce
+    the topic, explain why it matters, and hint at what the reader will
+    discover as they scroll.
+  </p>
+  <p>
+    You don't need to give everything away — just enough to earn the
+    scroll. The interactive section below will walk through the data
+    step by step.
+  </p>
+</section>
+
+<hr class="section-rule">
+
+
+<!-- ============================================================
+     SCROLLYTELLING SECTION
+     ─────────────────────────────────────────────────────────────
+     • .step divs   = the text blocks on the left
+     • .sticky-graphic = the chart panel on the right (auto-sticky)
+     • data-step="N" must match the index in CHART_STEPS below
+     ============================================================ -->
+<section class="scrolly" id="scrolly">
+
+  <!-- ── LEFT: scrolling text steps ── -->
+  <div class="steps-container">
+
+    <!-- Step 0 — introduce the chart -->
+    <div class="step" data-step="0">
+      <div class="step-inner">
+        <div class="step-number">01</div>
+        <p>
+          This is <strong>step one</strong>. Write your opening
+          observation here. What does the reader see when the chart
+          first appears? Orient them.
+        </p>
+        <p>
+          Each text block is a "step" that triggers the chart to
+          update. Scroll down to see it in action.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 1 — highlight a subset -->
+    <div class="step" data-step="1">
+      <div class="step-inner">
+        <div class="step-number">02</div>
+        <p>
+          In <strong>step two</strong>, we can draw attention to
+          specific items by highlighting them and dimming the rest.
+        </p>
+        <p>
+          Update <code>CHART_STEPS[1].highlight</code> with the
+          labels you want to emphasize, and the chart will
+          automatically respond.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 2 — single highlight + annotation -->
+    <div class="step" data-step="2">
+      <div class="step-inner">
+        <div class="step-number">03</div>
+        <p>
+          <strong>Step three</strong> zooms in on a single data
+          point and adds an annotation label. This is great for
+          calling out something surprising or counterintuitive.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 3 — show all again with context -->
+    <div class="step" data-step="3">
+      <div class="step-inner">
+        <div class="step-number">04</div>
+        <p>
+          By <strong>step four</strong> the reader has absorbed the
+          key details. Bring everything back into view to ask:
+          what does it all mean together?
+        </p>
+        <p>
+          The annotation persists to anchor the reader's memory.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 4 — conclusion beat -->
+    <div class="step" data-step="4">
+      <div class="step-inner">
+        <div class="step-number">05</div>
+        <p>
+          The final step lands your conclusion. What is the single
+          most important takeaway from this chart?
+        </p>
+        <p>
+          Keep it simple. The reader has scrolled the whole story —
+          reward them with clarity. Then let them read on to your
+          outro below.
+        </p>
+      </div>
+    </div>
+
+    <!--
+      ── ADDING MORE STEPS ────────────────────────────────────────
+      Copy one of the .step blocks above, increment data-step="N",
+      then add a matching entry to CHART_STEPS in the <script> below.
+      ─────────────────────────────────────────────────────────────
+    -->
+
+  </div><!-- /steps-container -->
+
+
+  <!-- ── RIGHT: sticky chart panel ── -->
+  <div class="sticky-graphic">
+    <div id="chart-container"></div>
+    <p class="chart-caption"></p>
+    <div class="step-dots"></div>
+  </div>
+
+</section><!-- /scrolly -->
+
+<hr class="section-rule">
+
+
+<!-- ============================================================
+     OUTRO  — prose after the scrollytelling ends
+     ============================================================ -->
+<section class="prose">
+  <p>
+    This is your conclusion. Summarize the key findings and leave
+    the reader with a clear takeaway. What should they do, think, or
+    feel differently about after reading this?
+  </p>
+  <p>
+    You can also add methodology notes, data sources, or further
+    reading here.
+  </p>
+</section>
+
+
+<!-- ============================================================
+     ╔══════════════════════════════════════════════════════════╗
+     ║  DATA & CHART CONFIG                                     ║
+     ║  ── Edit this section to build your story ──            ║
+     ╚══════════════════════════════════════════════════════════╝
+
+     Three things to customize:
+
+       1. DATA          your dataset (array of objects)
+       2. CHART_CONFIG  chart type, axis keys, colors
+       3. CHART_STEPS   what the chart shows at each scroll step
+
+     ============================================================ -->
+<script>
+
+/* ── 1. YOUR DATA ──────────────────────────────────────────────────
+   Replace the placeholder values below with your own data.
+   Each object must have at least the keys you set in CHART_CONFIG
+   (xKey and yKey). You can add as many extra fields as you like
+   and reference them in CHART_STEPS.
+
+   Tips:
+   • For a bar chart, xKey is usually a category (string) label.
+   • For a line/scatter chart, xKey is usually a number or date string.
+   • Load from an external file instead:
+       fetch('data.json').then(r => r.json()).then(d => { DATA = d; });
+     (you'll need to call initScrolly() in that callback too — see
+      the comment at the bottom of scrolly-engine.js)
+   ────────────────────────────────────────────────────────────── */
+var DATA = [
+  { label: 'Category A', value: 72 },
+  { label: 'Category B', value: 48 },
+  { label: 'Category C', value: 91 },
+  { label: 'Category D', value: 33 },
+  { label: 'Category E', value: 65 },
+  { label: 'Category F', value: 84 },
+  { label: 'Category G', value: 57 },
+];
+
+
+/* ── 2. CHART CONFIG ───────────────────────────────────────────────
+   type           'bar' | 'line' | 'scatter'
+   xKey           key in DATA to use for the x-axis
+   yKey           key in DATA to use for the y-axis
+   color          default bar/dot/line color (any CSS color)
+   highlightColor color for highlighted items (defaults to color)
+   dimColor       color for dimmed (non-highlighted) items
+   ────────────────────────────────────────────────────────────── */
+var CHART_CONFIG = {
+  type:           'bar',
+  xKey:           'label',
+  yKey:           'value',
+  color:          '#c0392b',
+  highlightColor: '#c0392b',
+  dimColor:       '#d9cfc2',
+};
+
+
+/* ── 3. CHART STEPS ────────────────────────────────────────────────
+   One entry per .step div above. Index 0 = first step, etc.
+
+   Each step may have:
+     highlight   Array of xKey values to emphasize; others dim.
+                 null = show all bars at equal weight.
+     annotation  { label, text } — a callout on one data point.
+                 null = no annotation.
+     caption     String shown below the chart during this step.
+                 '' = nothing.
+   ────────────────────────────────────────────────────────────── */
+var CHART_STEPS = [
+  {
+    // Step 0: show everything equally
+    highlight:  null,
+    annotation: null,
+    caption:    'Placeholder data — replace DATA above with your own.',
+  },
+  {
+    // Step 1: highlight three bars
+    highlight:  ['Category A', 'Category C', 'Category F'],
+    annotation: null,
+    caption:    'Three items stand out from the rest.',
+  },
+  {
+    // Step 2: spotlight the maximum with an annotation
+    highlight:  ['Category C'],
+    annotation: { label: 'Category C', text: 'Highest value' },
+    caption:    'Category C leads the group.',
+  },
+  {
+    // Step 3: all bars return; annotation lingers
+    highlight:  null,
+    annotation: { label: 'Category C', text: 'Still the highest' },
+    caption:    'Seen in context of the full dataset.',
+  },
+  {
+    // Step 4: clean finish — no highlights, no annotation
+    highlight:  null,
+    annotation: null,
+    caption:    '',
+  },
+];
+
+</script>
+
+<!-- CDN dependencies — no npm, no build step -->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/scrollama"></script>
+
+<!-- Scrollytelling engine (shared across all articles) -->
+<script src="../../scrolly-engine.js"></script>
+
+</body>
+</html>

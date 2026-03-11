@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="index.html" class="site-name">The Blog</a>
+    <nav class="site-nav">
+      <a href="#">About</a>
+      <a href="#">Archive</a>
+    </nav>
+  </header>
+
+  <div class="home-hero">
+    <h1>Data stories<br>worth scrolling for.</h1>
+    <p>Scrollytelling articles that turn data into narrative. Edit the config, drop in your data, publish.</p>
+  </div>
+
+  <div class="article-grid">
+
+    <!-- ── Live example article ── -->
+    <a href="articles/template/index.html" class="article-card">
+      <div class="card-thumb">
+        <span>Bar chart · 5 scroll steps</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Template</div>
+        <div class="card-title">Your Article Title Goes Here</div>
+        <div class="card-subtitle">A subtitle that draws readers in — edit this in the article config.</div>
+        <div class="card-meta">Your Name &middot; March 2026</div>
+      </div>
+    </a>
+
+    <!-- ── Maple Leafs article ── -->
+    <a href="articles/maple-leafs/index.html" class="article-card">
+      <div class="card-thumb">
+        <span>Line chart · 9 scroll steps</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Hockey Analytics</div>
+        <div class="card-title">The Great Possession Lie</div>
+        <div class="card-subtitle">Eighteen seasons of Maple Leafs 5-on-5 data reveal a team that has always found creative ways to look better — or worse — than it actually is.</div>
+        <div class="card-meta">Ryan Ghizzoni &middot; March 2026</div>
+      </div>
+    </a>
+
+    <!-- ── Placeholder card 2 ── -->
+    <div class="article-card article-card--placeholder">
+      <div class="card-thumb">
+        <span>Duplicate articles/template/</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Coming soon</div>
+        <div class="card-title">Your Next Story</div>
+        <div class="card-subtitle">Copy the template folder, rename it, and update the config at the top of index.html.</div>
+        <div class="card-meta">Add your byline here</div>
+      </div>
+    </div>
+
+    <!-- ── Placeholder card 3 ── -->
+    <div class="article-card article-card--placeholder">
+      <div class="card-thumb">
+        <span>Another story</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag">Coming soon</div>
+        <div class="card-title">And Another One</div>
+        <div class="card-subtitle">Each article is a self-contained folder. No build step required.</div>
+        <div class="card-meta">Add your byline here</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>Built with scrollama + D3. <a href="articles/template/index.html">View the template &rarr;</a></p>
+  </footer>
+
+</body>
+</html>
