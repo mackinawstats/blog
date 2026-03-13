@@ -345,12 +345,11 @@
   /* ================================================================
      TAP STEPPER  (mobile only)
      ================================================================ */
-  function initStepper() {
-    let current = 0;
-
-    /* Build stepper element and insert before the chart */
-    const scrollyEl  = document.querySelector('.scrolly');
-    const stickyEl   = document.querySelector('.sticky-graphic');
+  function buildStepperDOM() {
+    /* Insert the stepper shell BEFORE initChart() so D3 measures
+       the chart container at its final reduced height. */
+    const scrollyEl = document.querySelector('.scrolly');
+    const stickyEl  = document.querySelector('.sticky-graphic');
 
     const stepper = document.createElement('div');
     stepper.className = 'mobile-stepper';
@@ -365,7 +364,6 @@
 
     scrollyEl.insertBefore(stepper, stickyEl);
 
-    /* Build progress dots */
     const dotsEl2 = stepper.querySelector('.stepper-dots');
     stepEls.forEach((_, i) => {
       const dot = document.createElement('span');
@@ -373,25 +371,27 @@
       dotsEl2.appendChild(dot);
     });
 
+    return stepper;
+  }
+
+  function initStepper(stepper) {
+    let current = 0;
+
+    const dotsEl2   = stepper.querySelector('.stepper-dots');
     const headerEl  = stepper.querySelector('.stepper-header');
     const textEl    = stepper.querySelector('.stepper-text');
     const prevBtn   = stepper.querySelector('.stepper-prev');
     const nextBtn   = stepper.querySelector('.stepper-next');
 
     function render(index) {
-      /* Copy prose from the hidden step element */
       const inner = stepEls[index] ? stepEls[index].querySelector('.step-inner') : null;
       textEl.innerHTML = inner ? inner.innerHTML : '';
-
       headerEl.textContent = 'Step ' + (index + 1) + ' of ' + stepEls.length;
-
       prevBtn.disabled = index === 0;
       nextBtn.disabled = index === stepEls.length - 1;
-
       dotsEl2.querySelectorAll('.step-dot').forEach((d, i) => {
         d.classList.toggle('is-active', i === index);
       });
-
       updateChart(index);
     }
 
@@ -415,16 +415,20 @@
       return;
     }
 
-    initChart();
-    updateChart(0);
-
     if (window.innerWidth <= 768) {
-      initStepper();
+      /* Insert stepper shell first so the chart container has its
+         final height when D3 measures it below. */
+      const stepper = buildStepperDOM();
+      initChart();
+      updateChart(0);
+      initStepper(stepper);
     } else {
       if (typeof scrollama === 'undefined') {
         console.error('[scrolly-engine] Scrollama is not loaded.');
         return;
       }
+      initChart();
+      updateChart(0);
       initScrolly();
       if (stepEls.length) stepEls[0].classList.add('is-active');
       setActiveDot(0);
