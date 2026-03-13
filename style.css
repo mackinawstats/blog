@@ -411,12 +411,8 @@ a { color: inherit; text-decoration: none; }
    ================================================================ */
 @media (max-width: 768px) {
 
-  /* The scrolly section becomes a fixed-height interactive widget */
-  .scrolly {
-    flex-direction: column;
-    height: calc(100vh - 48px);
-    overflow: hidden;
-  }
+  /* Normal page flow — no fixed height, no overflow tricks */
+  .scrolly { flex-direction: column; }
 
   /* Hide the long scroll-based steps column; JS builds the stepper instead */
   .steps-container { display: none; }
@@ -425,7 +421,6 @@ a { color: inherit; text-decoration: none; }
   .mobile-stepper {
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
     padding: 0.9rem 1.25rem 0.7rem;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
@@ -447,14 +442,11 @@ a { color: inherit; text-decoration: none; }
     line-height: 1.6;
     color: var(--text-mid);
     margin-bottom: 0.7rem;
-    overflow-y: auto;
-    max-height: 28vh;
   }
 
   .stepper-text p { margin-bottom: 0.5em; }
   .stepper-text p:last-child { margin-bottom: 0; }
   .stepper-text strong { color: var(--text); }
-  /* hide the step-number badge inside injected content */
   .stepper-text .step-number { display: none; }
 
   .stepper-nav {
@@ -463,7 +455,6 @@ a { color: inherit; text-decoration: none; }
     justify-content: space-between;
     padding-top: 0.6rem;
     border-top: 1px solid var(--border);
-    flex-shrink: 0;
   }
 
   .stepper-btn {
@@ -480,10 +471,7 @@ a { color: inherit; text-decoration: none; }
     transition: background 0.12s, color 0.12s;
   }
 
-  .stepper-btn:active {
-    background: var(--accent);
-    color: #fff;
-  }
+  .stepper-btn:active { background: var(--accent); color: #fff; }
 
   .stepper-btn:disabled {
     color: var(--border);
@@ -492,31 +480,25 @@ a { color: inherit; text-decoration: none; }
     background: none;
   }
 
-  .stepper-dots {
-    display: flex;
-    gap: 5px;
-  }
+  .stepper-dots { display: flex; gap: 5px; }
 
-  /* ── Chart fills the remaining height ── */
+  /* ── Chart area: explicit vh height so D3 always measures correctly ── */
   .sticky-graphic {
-    flex: 1 1 0;
-    min-height: 0;
     position: relative;
     top: auto;
     z-index: auto;
-    padding: 0.6rem 1rem 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1rem 0.5rem;
   }
 
+  /* Explicit height — no percentage, no flex dependency */
   #chart-container {
-    height: calc(100% - 52px);
+    height: 38vh;
+    width: 100%;
     max-height: none;
   }
 
-  .chart-caption {
-    font-size: 0.65rem;
-    margin-top: 0.35rem;
-  }
+  .chart-caption { font-size: 0.65rem; margin-top: 0.4rem; }
 
-  /* hide original dots row inside the chart area */
   .step-dots { display: none; }
 }

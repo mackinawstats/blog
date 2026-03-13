@@ -416,17 +416,10 @@
     }
 
     if (window.innerWidth <= 768) {
-      /* Insert stepper shell first, then wait two animation frames so
-         the browser fully resolves the flex layout before D3 measures
-         the chart container via getBoundingClientRect(). */
       const stepper = buildStepperDOM();
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          initChart();
-          updateChart(0);
-          initStepper(stepper);
-        });
-      });
+      initChart();
+      updateChart(0);
+      initStepper(stepper);
     } else {
       if (typeof scrollama === 'undefined') {
         console.error('[scrolly-engine] Scrollama is not loaded.');
