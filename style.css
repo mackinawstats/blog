@@ -403,51 +403,121 @@ a { color: inherit; text-decoration: none; }
 }
 
 
+/* ── Mobile stepper (hidden on desktop) ──────────────────────── */
+.mobile-stepper { display: none; }
+
 /* ================================================================
-   MOBILE — stack graphic on top, steps below
+   MOBILE — tap-through stepper replaces scroll layout
    ================================================================ */
 @media (max-width: 768px) {
+
+  /* The scrolly section becomes a fixed-height interactive widget */
   .scrolly {
     flex-direction: column;
+    height: calc(100vh - 48px);
+    overflow: hidden;
   }
 
-  /* Chart floats to top on mobile so it stays visible while reading */
-  .sticky-graphic {
-    order: -1;
-    flex: none;
-    max-width: 100%;
-    width: 100%;
-    height: 42vh;
-    position: sticky;
-    top: 48px; /* below site header */
-    z-index: 3;
+  /* Hide the long scroll-based steps column; JS builds the stepper instead */
+  .steps-container { display: none; }
+
+  /* ── Stepper panel (text + nav) sits above the chart ── */
+  .mobile-stepper {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 0.9rem 1.25rem 0.7rem;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
-    padding: 0.75rem 1rem 0.5rem;
+  }
+
+  .stepper-header {
+    font-family: var(--font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+    margin-bottom: 0.55rem;
+  }
+
+  .stepper-text {
+    font-family: var(--font-serif);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text-mid);
+    margin-bottom: 0.7rem;
+    overflow-y: auto;
+    max-height: 28vh;
+  }
+
+  .stepper-text p { margin-bottom: 0.5em; }
+  .stepper-text p:last-child { margin-bottom: 0; }
+  .stepper-text strong { color: var(--text); }
+  /* hide the step-number badge inside injected content */
+  .stepper-text .step-number { display: none; }
+
+  .stepper-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .stepper-btn {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: none;
+    border: 1.5px solid var(--accent);
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.4rem 1rem;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.12s, color 0.12s;
+  }
+
+  .stepper-btn:active {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .stepper-btn:disabled {
+    color: var(--border);
+    border-color: var(--border);
+    cursor: default;
+    background: none;
+  }
+
+  .stepper-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  /* ── Chart fills the remaining height ── */
+  .sticky-graphic {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    top: auto;
+    z-index: auto;
+    padding: 0.6rem 1rem 0.5rem;
+    height: auto;
   }
 
   #chart-container {
-    height: calc(42vh - 72px);
+    height: calc(100% - 52px);
     max-height: none;
   }
 
   .chart-caption {
-    font-size: 0.68rem;
-    margin-top: 0.4rem;
+    font-size: 0.65rem;
+    margin-top: 0.35rem;
   }
 
-  .steps-container {
-    order: 1;
-    flex: none;
-    max-width: 100%;
-    width: 100%;
-    padding: 0 1.25rem;
-    padding-top: 2vh;
-    padding-bottom: 20vh;
-  }
-
-  /* Each step fills just enough to scroll cleanly past the sticky chart */
-  .step { min-height: 60vh; }
-
-  .step-inner { max-width: 100%; }
+  /* hide original dots row inside the chart area */
+  .step-dots { display: none; }
 }

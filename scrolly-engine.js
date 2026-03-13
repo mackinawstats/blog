@@ -318,19 +318,15 @@
   }
 
   /* ================================================================
-     SCROLLAMA SETUP
+     SCROLLAMA SETUP  (desktop only)
      ================================================================ */
   function initScrolly() {
     const scroller = scrollama();
 
-    // On mobile the chart is sticky at the top (~42vh + header), so trigger
-    // steps lower in the viewport so the chart updates as text scrolls into view.
-    const mobileOffset = window.innerWidth <= 768 ? 0.8 : 0.5;
-
     scroller
       .setup({
         step:   '.step',
-        offset: mobileOffset,
+        offset: 0.5,
         debug:  false,
       })
       .onStepEnter(({ index }) => {
@@ -339,12 +335,75 @@
         updateChart(index);
       });
 
-    /* Re-calculate on resize */
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => scroller.resize(), 150);
     });
+  }
+
+  /* ================================================================
+     TAP STEPPER  (mobile only)
+     ================================================================ */
+  function initStepper() {
+    let current = 0;
+
+    /* Build stepper element and insert before the chart */
+    const scrollyEl  = document.querySelector('.scrolly');
+    const stickyEl   = document.querySelector('.sticky-graphic');
+
+    const stepper = document.createElement('div');
+    stepper.className = 'mobile-stepper';
+    stepper.innerHTML =
+      '<div class="stepper-header"></div>' +
+      '<div class="stepper-text"></div>' +
+      '<div class="stepper-nav">' +
+        '<button class="stepper-btn stepper-prev" aria-label="Previous">&#8592; Back</button>' +
+        '<div class="stepper-dots"></div>' +
+        '<button class="stepper-btn stepper-next" aria-label="Next">Next &#8594;</button>' +
+      '</div>';
+
+    scrollyEl.insertBefore(stepper, stickyEl);
+
+    /* Build progress dots */
+    const dotsEl2 = stepper.querySelector('.stepper-dots');
+    stepEls.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'step-dot';
+      dotsEl2.appendChild(dot);
+    });
+
+    const headerEl  = stepper.querySelector('.stepper-header');
+    const textEl    = stepper.querySelector('.stepper-text');
+    const prevBtn   = stepper.querySelector('.stepper-prev');
+    const nextBtn   = stepper.querySelector('.stepper-next');
+
+    function render(index) {
+      /* Copy prose from the hidden step element */
+      const inner = stepEls[index] ? stepEls[index].querySelector('.step-inner') : null;
+      textEl.innerHTML = inner ? inner.innerHTML : '';
+
+      headerEl.textContent = 'Step ' + (index + 1) + ' of ' + stepEls.length;
+
+      prevBtn.disabled = index === 0;
+      nextBtn.disabled = index === stepEls.length - 1;
+
+      dotsEl2.querySelectorAll('.step-dot').forEach((d, i) => {
+        d.classList.toggle('is-active', i === index);
+      });
+
+      updateChart(index);
+    }
+
+    nextBtn.addEventListener('click', () => {
+      if (current < stepEls.length - 1) { current++; render(current); }
+    });
+
+    prevBtn.addEventListener('click', () => {
+      if (current > 0) { current--; render(current); }
+    });
+
+    render(0);
   }
 
   /* ================================================================
@@ -355,18 +414,21 @@
       console.error('[scrolly-engine] D3 is not loaded. Add it before scrolly-engine.js.');
       return;
     }
-    if (typeof scrollama === 'undefined') {
-      console.error('[scrolly-engine] Scrollama is not loaded. Add it before scrolly-engine.js.');
-      return;
-    }
 
     initChart();
-    initScrolly();
-
-    /* Show first step immediately */
-    if (stepEls.length) stepEls[0].classList.add('is-active');
-    setActiveDot(0);
     updateChart(0);
+
+    if (window.innerWidth <= 768) {
+      initStepper();
+    } else {
+      if (typeof scrollama === 'undefined') {
+        console.error('[scrolly-engine] Scrollama is not loaded.');
+        return;
+      }
+      initScrolly();
+      if (stepEls.length) stepEls[0].classList.add('is-active');
+      setActiveDot(0);
+    }
   });
 
 })();
