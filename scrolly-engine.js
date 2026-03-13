@@ -63,8 +63,20 @@
 
   const M = { top: 24, right: 24, bottom: 52, left: 48 };
 
-  /* Compute inner dimensions from the container */
+  /* Compute inner dimensions.
+     On mobile, derive from window dimensions directly to avoid
+     any stale or constrained getBoundingClientRect() readings. */
   function dims() {
+    if (window.innerWidth <= 768) {
+      // sticky-graphic has 1rem (16px) horizontal padding on each side
+      const mobileW = window.innerWidth - 32;
+      // #chart-container has explicit height: 38vh
+      const mobileH = Math.round(window.innerHeight * 0.38);
+      return {
+        W: mobileW - M.left - M.right,
+        H: mobileH - M.top  - M.bottom,
+      };
+    }
     const rect = chartEl.getBoundingClientRect();
     return {
       W: Math.floor(rect.width)  - M.left - M.right,
