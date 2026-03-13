@@ -7,15 +7,15 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:             #f5f0e8;
+  --bg:             #f0f4f8;
   --bg-card:        #ffffff;
-  --text:           #1a1a1a;
-  --text-mid:       #444;
-  --text-light:     #888;
-  --accent:         #c0392b;
-  --accent-muted:   #e8d5d3;
-  --border:         #e0dbd0;
-  --step-active:    #c0392b;
+  --text:           #0a1628;
+  --text-mid:       #2c4a6e;
+  --text-light:     #6b8cae;
+  --accent:         #1a56a0;
+  --accent-muted:   #ccddf0;
+  --border:         #c8d8ea;
+  --step-active:    #1a56a0;
 
   --font-sans:      'Inter', system-ui, -apple-system, sans-serif;
   --font-serif:     Georgia, 'Times New Roman', serif;
@@ -184,7 +184,7 @@ a { color: inherit; text-decoration: none; }
    ARTICLE HEADER
    ================================================================ */
 .article-header {
-  background: #111;
+  background: #0a1e3d;
   color: #fff;
   padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem);
 }
@@ -296,7 +296,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .step-inner {
-  background: rgba(245, 240, 232, 0.94);
+  background: rgba(240, 244, 248, 0.96);
   backdrop-filter: blur(4px);
   border-left: 3px solid transparent;
   padding: 1.5rem 1.75rem;
