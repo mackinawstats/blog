@@ -297,7 +297,7 @@
           .attr('width',  bb.width  + 12)
           .attr('height', bb.height + 6)
           .attr('rx', 3)
-          .attr('fill', '#f5f0e8');
+          .attr('fill', 'var(--bg, #f0f4f8)');
 
         /* Fade in */
         annotGroup.selectAll('*')
@@ -323,10 +323,14 @@
   function initScrolly() {
     const scroller = scrollama();
 
+    // On mobile the chart is sticky at the top (~42vh + header), so trigger
+    // steps lower in the viewport so the chart updates as text scrolls into view.
+    const mobileOffset = window.innerWidth <= 768 ? 0.8 : 0.5;
+
     scroller
       .setup({
         step:   '.step',
-        offset: 0.5,  // trigger when step midpoint crosses viewport midpoint
+        offset: mobileOffset,
         debug:  false,
       })
       .onStepEnter(({ index }) => {
