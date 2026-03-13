@@ -484,10 +484,12 @@ a { color: inherit; text-decoration: none; }
 
   /* ── Chart area: explicit vh height so D3 always measures correctly ── */
   .sticky-graphic {
+    flex: none;
+    max-width: 100%;
+    width: 100%;
     position: relative;
     top: auto;
     z-index: auto;
-    width: 100%;
     padding: 0.75rem 1rem 0.5rem;
   }
 
